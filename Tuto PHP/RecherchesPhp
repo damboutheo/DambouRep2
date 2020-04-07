@@ -1,0 +1,57 @@
+	<meta charset="utf-8" />
+<?php
+ 
+$bdd = new PDO('mysql:host=127.0.0.1;dbname=primfx;charset=utf8','root','');
+ 
+$articles = $bdd->query('SELECT titre FROM articles ORDER BY id DESC');
+if(isset($_GET['q']) AND !empty($_GET['q'])) {
+   $q = htmlspecialchars($_GET['q']);
+   $articles = $bdd->query('SELECT titre FROM articles WHERE titre LIKE "%'.$q.'%" ORDER BY id DESC');
+   if($articles->rowCount() == 0) {
+      $articles = $bdd->query('SELECT titre FROM articles WHERE CONCAT(titre, contenu) LIKE "%'.$q.'%" ORDER BY id DESC');
+   }
+}
+?>
+<form method="GET">
+   <input type="search" name="q" placeholder="Recherche..." />
+   <input type="submit" value="Valider" />
+</form>
+<?php if($articles->rowCount() > 0) { ?>
+   <ul>
+   <?php while($a = $articles->fetch()) { ?>
+      <li><?= $a['titre'] ?></li>
+   <?php } ?>
+   </ul>
+<?php } else { ?>
+Aucun résultat pour: <?= $q ?>...
+<?php } ?>
+
+ 
+Votre Commentaire
+damboutheo
+Commentaire 
+Votre commentaire...
+Commentaires 21
+Loicbatat
+Loicbatat
+Le 14 mars, à 22:02 | 
+ Répondre
+stp il faut souvant mettre les commandes sql de ta base de donnée
+
+Idris-Rayan
+Idris-Rayan
+Le 3 août, à 17:20 | 
+ Répondre
+Comment mettre des liens sur les résultats des recherches ?
+merci d'avance
+
+Idris-Rayan
+Idris-Rayan
+Le 3 août, à 15:01 | 
+ Répondre
+Comment mettre des liens sur les résultats des recherches ?
+merci d'avance
+
+nes99
+nes99
+Le 17 janvier, à
